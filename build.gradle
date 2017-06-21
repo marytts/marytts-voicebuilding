@@ -1,6 +1,10 @@
 plugins {
     id 'groovy'
+    id 'maven-publish'
 }
+
+group 'de.dfki.mary'
+version '0.1-SNAPSHOT'
 
 repositories {
     jcenter()
@@ -15,10 +19,45 @@ dependencies {
     testRuntime group: 'de.dfki.mary', name: 'marytts-lang-de', version: maryttsVersion
 }
 
+
+configurations.all {
+    resolutionStrategy {
+        dependencySubstitution {
+            force 'org.codehaus.groovy:groovy-all:2.4.4'
+            substitute module('org.slf4j:slf4j-log4j12:1.6.1') with module('org.slf4j:log4j-over-slf4j:1.6.1')
+        }
+    }
+}
+
+
 test {
     useTestNG()
     workingDir = buildDir
     testLogging {
         exceptionFormat = 'full'
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourceJar {
+                classifier 'sources'
+            }
+        }
+    }
+    repositories {
+        maven {
+            url version.endsWith('-SNAPSHOT') ? 'https://oss.jfrog.org/artifactory/oss-snapshot-local' : 'https://api.bintray.com/maven/marytts/marytts/marytts'
+            credentials {
+                username = findProperty('bintrayUser')
+                password = findProperty('bintrayApiKey')
+            }
+        }
     }
 }
