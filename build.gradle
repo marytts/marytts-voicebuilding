@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'de.dfki.mary'
-version '0.1'
+version '0.2-SNAPSHOT'
 
 targetCompatibility = 1.7
 
