@@ -1,10 +1,10 @@
 package marytts
 
-import groovy.util.logging.Log4j
+import groovy.util.logging.Log4j2
 
 import marytts.features.FeatureProcessorManager
 
-@Log4j
+@Log4j2
 class FeatureLister {
 
     def fpm

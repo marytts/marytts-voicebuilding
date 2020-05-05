@@ -1,14 +1,14 @@
 package marytts
 
 import groovy.json.JsonSlurper
-import groovy.util.logging.Log4j
+import groovy.util.logging.Log4j2
 import groovy.xml.XmlUtil
 
 import marytts.util.MaryUtils
 import marytts.util.data.audio.MaryAudioUtils
 import marytts.util.dom.DomUtils
 
-@Log4j
+@Log4j2
 class BatchProcessor {
     static void main(String[] args) {
         def mary = new LocalMaryInterface()

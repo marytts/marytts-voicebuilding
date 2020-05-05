@@ -1,11 +1,11 @@
 package marytts
 
-import groovy.util.logging.Log4j
+import groovy.util.logging.Log4j2
 
 import org.testng.Assert
 import org.testng.annotations.*
 
-@Log4j
+@Log4j2
 class FeatureListerTest {
 
     def tmpDir
