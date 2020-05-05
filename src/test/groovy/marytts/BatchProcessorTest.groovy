@@ -1,13 +1,13 @@
 package marytts
 
 import groovy.json.JsonBuilder
-import groovy.util.logging.Log4j
+import groovy.util.logging.Log4j2
 
 import org.custommonkey.xmlunit.*
 
 import org.testng.annotations.*
 
-@Log4j
+@Log4j2
 class BatchProcessorTest {
 
     def tmpDir
@@ -42,6 +42,7 @@ class BatchProcessorTest {
                     outputFile: outputPath
             ]
         }
+
         def json = new JsonBuilder(batch).toPrettyString()
         log.info "batch = $json"
         def batchFile = File.createTempFile('batch', '.json')
