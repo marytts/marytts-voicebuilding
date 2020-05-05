@@ -4,10 +4,10 @@
     <s>
       <t g2p_method="lexicon" ph="' w E l - k @ m" pos="VB">Welcome</t>
       <t g2p_method="lexicon" ph="' t u" pos="TO">to</t>
-      <t g2p_method="lexicon" ph="D @" pos="DT">the</t>
+      <t g2p_method="lexicon" ph="' D @" pos="DT">the</t>
       <t g2p_method="lexicon" ph="' w r= l d" pos="NN">world</t>
       <t g2p_method="lexicon" ph="' V v" pos="IN">of</t>
-      <t g2p_method="lexicon" ph="s - ' p i tS" pos="NN">speech</t>
+      <t g2p_method="lexicon" ph="' s p i tS" pos="NN">speech</t>
       <t g2p_method="lexicon" ph="' s I n - T @ - s @ s" pos="NN">synthesis</t>
       <t pos=".">!</t>
     </s>
