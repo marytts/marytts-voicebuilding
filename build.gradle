@@ -62,6 +62,27 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            pom {
+                url = 'https://github.com/marytts/marytts-voicebuilding'
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License v3.0 only'
+                        url = 'https://spdx.org/licenses/LGPL-3.0-only.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'psibre'
+                        name = 'Ingmar Steiner'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/marytts/marytts-voicebuilding.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:marytts/marytts-voicebuilding.git'
+                    url = 'https://github.com/marytts/marytts-voicebuilding'
+
+                }
+            }
         }
     }
     repositories {
