@@ -12,6 +12,7 @@ marytts-voicebuilding
 
 - Migrated from Travis CI to GitHub Actions
 - Build with Gradle v7.5.1
+- Publish to OSSRH
 
 ### Removed
 
