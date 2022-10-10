@@ -4,9 +4,14 @@ marytts-voicebuilding
 [Unreleased]
 ------------
 
+### Added
+
+- Testing on Java 8, 11, 17
+
 ### Changed
 
 - Migrated from Travis CI to GitHub Actions
+- Build with Gradle v7.5.1
 
 ### Removed
 

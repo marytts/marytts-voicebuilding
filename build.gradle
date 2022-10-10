@@ -1,4 +1,5 @@
 plugins {
+    id 'java-library'
     id 'groovy'
     id 'maven-publish'
 }
@@ -6,31 +7,46 @@ plugins {
 group 'de.dfki.mary'
 version '0.2-SNAPSHOT'
 
-targetCompatibility = 1.7
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+    withJavadocJar()
+    withSourcesJar()
+}
 
 repositories {
-    jcenter()
-}
+    mavenCentral()
 
-dependencies {
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.4'
-    compile group: 'de.dfki.mary', name: 'marytts-runtime', version: maryttsVersion
-    testCompile group: 'org.testng', name: 'testng', version: '6.9.4'
-    testCompile group: 'xmlunit', name: 'xmlunit', version: '1.6'
-    testRuntime group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: maryttsVersion
-    testRuntime group: 'de.dfki.mary', name: 'marytts-lang-de', version: maryttsVersion
-}
-
-
-configurations.all {
-    resolutionStrategy {
-        dependencySubstitution {
-            force 'org.codehaus.groovy:groovy-all:2.4.4'
-            substitute module('org.slf4j:slf4j-log4j12:1.6.1') with module('org.slf4j:log4j-over-slf4j:1.6.1')
+    exclusiveContent {
+        forRepository {
+            maven {
+                url 'https://mlt.jfrog.io/artifactory/mlt-mvn-releases-local'
+            }
+        }
+        filter {
+            includeGroup 'de.dfki.lt.jtok'
         }
     }
 }
 
+dependencies {
+    implementation group: 'de.dfki.mary', name: 'marytts-runtime', version: maryttsVersion, {
+        exclude group: 'com.twmacinta', module: 'fast-md5'
+        exclude group: 'gov.nist.math', module: 'Jampack'
+    }
+    testImplementation group: 'org.testng', name: 'testng', version: '7.5'
+    testImplementation group: 'xmlunit', name: 'xmlunit', version: '1.6'
+    testRuntimeOnly group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: maryttsVersion, {
+        transitive = false
+    }
+    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-en', version: maryttsVersion, {
+        transitive = false
+    }
+    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-de', version: maryttsVersion, {
+        transitive = false
+    }
+}
 
 test {
     useTestNG()
@@ -40,17 +56,10 @@ test {
     }
 }
 
-task sourceJar(type: Jar) {
-    from sourceSets.main.allJava
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact sourceJar {
-                classifier 'sources'
-            }
         }
     }
     repositories {
