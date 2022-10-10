@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'groovy'
+    id 'signing'
     id 'maven-publish'
 }
 
@@ -93,4 +94,12 @@ publishing {
             credentials(PasswordCredentials)
         }
     }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
 }
