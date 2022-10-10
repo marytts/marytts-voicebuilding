@@ -7,6 +7,8 @@ plugins {
 group 'de.dfki.mary'
 version '0.2-SNAPSHOT'
 
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
@@ -64,11 +66,10 @@ publishing {
     }
     repositories {
         maven {
-            url version.endsWith('-SNAPSHOT') ? 'https://oss.jfrog.org/artifactory/oss-snapshot-local' : 'https://api.bintray.com/maven/marytts/marytts/marytts'
-            credentials {
-                username = findProperty('bintrayUser')
-                password = findProperty('bintrayApiKey')
-            }
+            name 'OSSRH'
+            url isReleaseVersion ? 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+                    : 'https://oss.sonatype.org/content/repositories/snapshots'
+            credentials(PasswordCredentials)
         }
     }
 }
