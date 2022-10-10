@@ -1,4 +1,5 @@
 plugins {
+    id 'java-library'
     id 'groovy'
     id 'maven-publish'
 }
@@ -28,7 +29,6 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.4'
     implementation group: 'de.dfki.mary', name: 'marytts-runtime', version: maryttsVersion, {
         exclude group: 'com.twmacinta', module: 'fast-md5'
         exclude group: 'gov.nist.math', module: 'Jampack'
@@ -45,16 +45,6 @@ dependencies {
         transitive = false
     }
 }
-
-configurations.all {
-    resolutionStrategy {
-        dependencySubstitution {
-            force 'org.codehaus.groovy:groovy-all:2.4.4'
-            substitute module('org.slf4j:slf4j-log4j12:1.6.1') with module('org.slf4j:log4j-over-slf4j:1.6.1')
-        }
-    }
-}
-
 
 test {
     useTestNG()
