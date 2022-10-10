@@ -4,6 +4,14 @@ marytts-voicebuilding
 [Unreleased]
 ------------
 
+### Changed
+
+- Migrated from Travis CI to GitHub Actions
+
+### Removed
+
+- Support for Java 7
+
 [v0.1] (2017-06-23)
 -------------------
 
