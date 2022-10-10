@@ -6,15 +6,33 @@ plugins {
 group 'de.dfki.mary'
 version '0.2-SNAPSHOT'
 
-targetCompatibility = 1.7
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
 
 repositories {
-    jcenter()
+    mavenCentral()
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                url 'https://mlt.jfrog.io/artifactory/mlt-mvn-releases-local'
+            }
+        }
+        filter {
+            includeGroup 'de.dfki.lt.jtok'
+        }
+    }
 }
 
 dependencies {
     implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.4'
-    implementation group: 'de.dfki.mary', name: 'marytts-runtime', version: maryttsVersion
+    implementation group: 'de.dfki.mary', name: 'marytts-runtime', version: maryttsVersion, {
+        exclude group: 'com.twmacinta', module: 'fast-md5'
+        exclude group: 'gov.nist.math', module: 'Jampack'
+    }
     testImplementation group: 'org.testng', name: 'testng', version: '6.9.4'
     testImplementation group: 'xmlunit', name: 'xmlunit', version: '1.6'
     testRuntimeOnly group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: maryttsVersion
