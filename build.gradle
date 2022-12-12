@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'de.dfki.mary'
-version '0.2-SNAPSHOT'
+version '0.2.0'
 description 'Utility classes for MaryTTS voicebuilding'
 
 ext {
