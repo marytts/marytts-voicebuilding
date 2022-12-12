@@ -8,7 +8,10 @@ plugins {
 group 'de.dfki.mary'
 version '0.2-SNAPSHOT'
 
-ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+ext {
+    url = 'https://github.com/marytts/marytts-voicebuilding'
+    isReleaseVersion = !version.endsWith("SNAPSHOT")
+}
 
 java {
     toolchain {
@@ -64,7 +67,7 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
             pom {
-                url = 'https://github.com/marytts/marytts-voicebuilding'
+                url = project.url
                 licenses {
                     license {
                         name = 'GNU Lesser General Public License v3.0 only'
@@ -80,7 +83,7 @@ publishing {
                 scm {
                     connection = 'scm:git:git://github.com/marytts/marytts-voicebuilding.git'
                     developerConnection = 'scm:git:ssh://git@github.com:marytts/marytts-voicebuilding.git'
-                    url = 'https://github.com/marytts/marytts-voicebuilding'
+                    url = project.url
 
                 }
             }
