@@ -34,19 +34,19 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'de.dfki.mary', name: 'marytts-runtime', version: maryttsVersion, {
+    implementation group: 'de.dfki.mary', name: 'marytts-runtime', version: libs.versions.marytts.get(), {
         exclude group: 'com.twmacinta', module: 'fast-md5'
         exclude group: 'gov.nist.math', module: 'Jampack'
     }
     testImplementation group: 'org.testng', name: 'testng', version: '7.5'
     testImplementation group: 'xmlunit', name: 'xmlunit', version: '1.6'
-    testRuntimeOnly group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: maryttsVersion, {
+    testRuntimeOnly group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: libs.versions.marytts.get(), {
         transitive = false
     }
-    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-en', version: maryttsVersion, {
+    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-en', version: libs.versions.marytts.get(), {
         transitive = false
     }
-    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-de', version: maryttsVersion, {
+    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-de', version: libs.versions.marytts.get(), {
         transitive = false
     }
 }
