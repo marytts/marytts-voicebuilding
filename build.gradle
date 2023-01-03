@@ -63,6 +63,15 @@ test {
     }
 }
 
+tasks.register('integrationTest', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set 'marytts.FeatureLister'
+    systemProperties = [
+            locale    : Locale.US.toString(),
+            outputFile: new File(temporaryDir, 'features.txt')
+    ]
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
