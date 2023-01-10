@@ -70,6 +70,13 @@ tasks.register('integrationTest', JavaExec) {
             locale    : Locale.US.toString(),
             outputFile: new File(temporaryDir, 'features.txt')
     ]
+    if (JavaVersion.current().java9Compatible) {
+        jvmArgs = [
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.util=ALL-UNNAMED'
+        ]
+    }
 }
 
 publishing {
