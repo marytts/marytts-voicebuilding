@@ -63,7 +63,8 @@ test {
     }
 }
 
-tasks.register('integrationTest', JavaExec) {
+def integrationTestTask = tasks.register('integrationTest', JavaExec) {
+    group 'Verification'
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set 'marytts.FeatureLister'
     systemProperties = [
@@ -77,6 +78,10 @@ tasks.register('integrationTest', JavaExec) {
                 '--add-opens', 'java.base/java.util=ALL-UNNAMED'
         ]
     }
+}
+
+tasks.named('check') {
+    dependsOn integrationTestTask
 }
 
 publishing {
