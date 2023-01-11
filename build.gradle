@@ -42,6 +42,7 @@ dependencies {
         exclude group: 'com.twmacinta', module: 'fast-md5'
         exclude group: 'gov.nist.math', module: 'Jampack'
     }
+    runtimeOnly group: 'xerces', name: 'xercesImpl', version: '2.12.2'
     testImplementation group: 'org.testng', name: 'testng', version: '7.5'
     testImplementation group: 'xmlunit', name: 'xmlunit', version: '1.6'
     testRuntimeOnly group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: libs.versions.marytts.get(), {
@@ -61,6 +62,62 @@ test {
     testLogging {
         exceptionFormat = 'full'
     }
+}
+
+def batchProcessorIntegrationTestTask = tasks.register('batchProcessorIntegrationTest', JavaExec) {
+    group 'Verification'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass.set 'marytts.BatchProcessor'
+    def batchFile = file("$temporaryDir/batch.json")
+    args batchFile
+    systemProperty 'mary.base', temporaryDir
+    if (JavaVersion.current().java9Compatible) {
+        jvmArgs = [
+                '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.util=ALL-UNNAMED'
+        ]
+    }
+    def outputFile = file("$temporaryDir/output.xml")
+    doFirst {
+        def inputFile = file("$temporaryDir/input.txt")
+        inputFile.text = "Hello from MaryTTS!"
+        def batch = [
+                [
+                        locale    : Locale.US.toString(),
+                        inputType : 'TEXT',
+                        inputFile : inputFile.path,
+                        outputType: 'ALLOPHONES',
+                        outputFile: outputFile.path
+                ]
+        ]
+        batchFile.text = new groovy.json.JsonBuilder(batch).toPrettyString()
+    }
+    doLast {
+        assert outputFile.exists()
+    }
+}
+
+def featureListerIntegrationTestTask = tasks.register('featureListerIntegrationTest', JavaExec) {
+    group 'Verification'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set 'marytts.FeatureLister'
+    systemProperties = [
+            locale    : Locale.US.toString(),
+            outputFile: new File(temporaryDir, 'features.txt')
+    ]
+    if (JavaVersion.current().java9Compatible) {
+        jvmArgs = [
+                '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.util=ALL-UNNAMED'
+        ]
+    }
+}
+
+tasks.named('check') {
+    dependsOn batchProcessorIntegrationTestTask,
+            featureListerIntegrationTestTask
 }
 
 publishing {
