@@ -42,6 +42,7 @@ dependencies {
         exclude group: 'com.twmacinta', module: 'fast-md5'
         exclude group: 'gov.nist.math', module: 'Jampack'
     }
+    runtimeOnly group: 'xerces', name: 'xercesImpl', version: '2.12.2'
     testImplementation group: 'org.testng', name: 'testng', version: '7.5'
     testImplementation group: 'xmlunit', name: 'xmlunit', version: '1.6'
     testRuntimeOnly group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: libs.versions.marytts.get(), {
