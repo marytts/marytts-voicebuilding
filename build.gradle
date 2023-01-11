@@ -63,7 +63,41 @@ test {
     }
 }
 
-def integrationTestTask = tasks.register('integrationTest', JavaExec) {
+def batchProcessorIntegrationTestTask = tasks.register('batchProcessorIntegrationTest', JavaExec) {
+    group 'Verification'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass.set 'marytts.BatchProcessor'
+    def batchFile = file("$temporaryDir/batch.json")
+    args batchFile
+    systemProperty 'mary.base', temporaryDir
+    if (JavaVersion.current().java9Compatible) {
+        jvmArgs = [
+                '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.util=ALL-UNNAMED'
+        ]
+    }
+    def outputFile = file("$temporaryDir/output.xml")
+    doFirst {
+        def inputFile = file("$temporaryDir/input.txt")
+        inputFile.text = "Hello from MaryTTS!"
+        def batch = [
+                [
+                        locale    : Locale.US.toString(),
+                        inputType : 'TEXT',
+                        inputFile : inputFile.path,
+                        outputType: 'ALLOPHONES',
+                        outputFile: outputFile.path
+                ]
+        ]
+        batchFile.text = new groovy.json.JsonBuilder(batch).toPrettyString()
+    }
+    doLast {
+        assert outputFile.exists()
+    }
+}
+
+def featureListerIntegrationTestTask = tasks.register('featureListerIntegrationTest', JavaExec) {
     group 'Verification'
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set 'marytts.FeatureLister'
@@ -73,15 +107,16 @@ def integrationTestTask = tasks.register('integrationTest', JavaExec) {
     ]
     if (JavaVersion.current().java9Compatible) {
         jvmArgs = [
-                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
                 '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
                 '--add-opens', 'java.base/java.util=ALL-UNNAMED'
         ]
     }
 }
 
 tasks.named('check') {
-    dependsOn integrationTestTask
+    dependsOn batchProcessorIntegrationTestTask,
+            featureListerIntegrationTestTask
 }
 
 publishing {
