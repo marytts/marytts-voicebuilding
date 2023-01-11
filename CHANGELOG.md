@@ -4,6 +4,15 @@ marytts-voicebuilding
 [Unreleased]
 ------------
 
+### Added
+
+- Ad-hoc integration test for JavaExec
+- Xerces XML parser implementation dependency, fixing MaryXML processing errors under Java 17
+
+### Fixed
+
+- Errors with JavaExec on Java 17
+
 [v0.2.0] (2022-12-12)
 ---------------------
 
