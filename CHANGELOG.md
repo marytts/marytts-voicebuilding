@@ -4,6 +4,17 @@ marytts-voicebuilding
 [Unreleased]
 ------------
 
+### Fixed
+
+- Replaced dead repo for JTok dependency
+
+### Changed
+
+- Build with Gradle v8.6
+- Upgraded GitHub actions
+- Upgraded dependencies
+- Upgraded plugins
+
 [v0.2.1] (2023-01-11)
 ---------------------
 
