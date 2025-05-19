@@ -24,17 +24,6 @@ java {
 
 repositories {
     mavenCentral()
-
-    exclusiveContent {
-        forRepository {
-            maven {
-                url 'https://raw.githubusercontent.com/DFKI-MLT/Maven-Repository/main'
-            }
-        }
-        filter {
-            includeGroup 'de.dfki.lt.jtok'
-        }
-    }
 }
 
 dependencies {
@@ -53,6 +42,11 @@ dependencies {
     }
     testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-de', version: libs.versions.marytts.get(), {
         transitive = false
+    }
+    constraints {
+        implementation('de.dfki.lt.jtok:jtok-core:1.9.4') {
+            because 'transitive dependency v1.9.3 is not available in Maven Central'
+        }
     }
 }
 
