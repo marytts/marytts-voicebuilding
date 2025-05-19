@@ -27,20 +27,20 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'de.dfki.mary', name: 'marytts-runtime', version: libs.versions.marytts.get(), {
+    implementation libs.marytts.runtime, {
         exclude group: 'com.twmacinta', module: 'fast-md5'
         exclude group: 'gov.nist.math', module: 'Jampack'
     }
-    runtimeOnly group: 'xerces', name: 'xercesImpl', version: '2.12.2'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.5.1'
-    testImplementation group: 'xmlunit', name: 'xmlunit', version: '1.6'
-    testRuntimeOnly group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: libs.versions.marytts.get(), {
+    runtimeOnly libs.xerces.impl
+    testImplementation libs.testng
+    testImplementation libs.xmlunit
+    testRuntimeOnly libs.voice.cmu.slt.hsmm, {
         transitive = false
     }
-    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-en', version: libs.versions.marytts.get(), {
+    testRuntimeOnly libs.marytts.lang.en, {
         transitive = false
     }
-    testRuntimeOnly group: 'de.dfki.mary', name: 'marytts-lang-de', version: libs.versions.marytts.get(), {
+    testRuntimeOnly libs.marytts.lang.de, {
         transitive = false
     }
     constraints {
