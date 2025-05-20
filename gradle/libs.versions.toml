@@ -1,0 +1,14 @@
+[versions]
+marytts = "5.2.1"
+testng = "7.5.1"
+xerces = "2.12.2"
+xmlunit = "1.6"
+
+[libraries]
+marytts-lang-de = { group = "de.dfki.mary", name = "marytts-lang-de", version.ref = "marytts" }
+marytts-lang-en = { group = "de.dfki.mary", name = "marytts-lang-en", version.ref = "marytts" }
+marytts-runtime = { group = "de.dfki.mary", name = "marytts-runtime", version.ref = "marytts" }
+testng = { group = "org.testng", name = "testng", version.ref = "testng" }
+voice-cmu-slt-hsmm = { group = "de.dfki.mary", name = "voice-cmu-slt-hsmm", version.ref = "marytts" }
+xerces-impl = { group = "xerces", name = "xercesImpl", version.ref = "xerces" }
+xmlunit = { group = "xmlunit", name = "xmlunit", version.ref = "xmlunit" }

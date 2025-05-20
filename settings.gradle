@@ -1,13 +1,5 @@
 plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.10.0'
 }
 
 rootProject.name = 'marytts-voicebuilding'
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        libs {
-            version('marytts', '5.2.1')
-        }
-    }
-}
